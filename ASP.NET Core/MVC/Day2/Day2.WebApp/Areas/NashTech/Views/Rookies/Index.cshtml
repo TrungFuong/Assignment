@@ -1,0 +1,60 @@
+﻿@using Day2.WebApp.Models
+@model List<People>
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<div>
+    <table>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Gender</th>
+            <th>Date of Birth</th>
+            <th>Phone Number</th>
+            <th>Birth Place</th>
+            <th>Is Graduated</th>
+        </tr>
+        @foreach (var person in Model)
+        {
+            <tr>
+                <td>@person.FirstName</td> 
+                <td>@person.LastName</td>
+                <td>@person.Gender</td>
+                <td>@person.DateOfBirth</td>
+                <td>@person.PhoneNumber</td>
+                <td>@person.BirthPlace</td>
+                <td>@person.IsGraduated</td>
+            </tr>
+        }
+    </table>
+</div>
+
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid black;
+        padding: 8px;
+    }
+
+    th {
+        text-align: center;
+        background-color: #f2f2f2;
+    }
+
+    td{
+        text-align: left
+    }
+
+    tr:nth-child(even) {
+        background-color: lightblue;
+    }
+</style>
