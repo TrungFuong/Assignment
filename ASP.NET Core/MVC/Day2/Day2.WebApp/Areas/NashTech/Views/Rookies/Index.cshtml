@@ -1,9 +1,12 @@
 ﻿@using Day2.WebApp.Models
-@model List<People>
+@model List<Person>
 @{
     ViewData["Title"] = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
 
 <h1>Index</h1>
 
@@ -17,10 +20,11 @@
             <th>Phone Number</th>
             <th>Birth Place</th>
             <th>Is Graduated</th>
+            <th></th>
         </tr>
         @foreach (var person in Model)
         {
-            <tr>
+            <tr onclick="location.href='@Url.Action("Detail", new { id = person.Id })'" style="cursor:pointer">
                 <td>@person.FirstName</td> 
                 <td>@person.LastName</td>
                 <td>@person.Gender</td>
@@ -28,6 +32,7 @@
                 <td>@person.PhoneNumber</td>
                 <td>@person.BirthPlace</td>
                 <td>@person.IsGraduated</td>
+                <td><a asp-action="Update" asp-route-id="@person.Id" class="btn btn-sm btn-outline-danger">Update</a></td>
             </tr>
         }
     </table>

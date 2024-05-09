@@ -1,3 +1,6 @@
+using Day2.WebApp.Repositories;
+using Day2.WebApp.Services;
+
 namespace Day2.WebApp
 {
     public class Program
@@ -9,9 +12,11 @@ namespace Day2.WebApp
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
+            builder.Services.AddScoped<IPersonService, PersonService>();
+            builder.Services.AddSingleton<IPersonRepository, PersonRepository>();
+            
             var app = builder.Build();
-
+          
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {

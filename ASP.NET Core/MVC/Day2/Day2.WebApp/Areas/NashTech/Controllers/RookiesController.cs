@@ -1,4 +1,5 @@
 ﻿using Day2.WebApp.Models;
+using Day2.WebApp.Services;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
 
@@ -8,71 +9,97 @@ namespace Day2.WebApp.Areas.NashTech.Controllers
 
     public class RookiesController : Controller
     {
-        public List<People> ReadFile()
+        private readonly IPersonService _personService;
+
+        public RookiesController(IPersonService personService)
         {
-            string filePath = "D:\\Currently working on\\Work\\Assignment\\ASP.NET Core\\MVC\\Day2\\Day2.WebApp\\Data\\MOCK_DATA.csv";
-            string fileContent = "";
-
-            using (var reader = new StreamReader(filePath))
-            {
-                fileContent = reader.ReadToEnd();
-            }
-
-            List<People> people = ParsePeople(fileContent);
-            return people;
+            _personService = personService;
         }
+
         public IActionResult Index()
         {
-            List<People> people = ReadFile();
-
+            List<Person> people = _personService.GetAll();
             return View(people);
         }
 
-        public List<People> ParsePeople(string fileContent)
+        public IActionResult Create()
         {
-            List<People> people = new List<People>();
+            return View();
+        }
 
-            string[] lines = fileContent.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-
-            for (int i = 1; i < lines.Length; i++)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create([Bind("FirstName, LastName, Gender, DateOfBirth, PhoneNumber, BirthPlace, IsGraduated")] Person person)
+        {
+            
+            if (ModelState.IsValid)
             {
-                string[] values = lines[i].Split(',');
-
-                People person = new People
-                {
-                    FirstName = values[0],
-                    LastName = values[1],
-                    Gender = (Gender)Enum.Parse(typeof(Gender), values[2]),
-                    DateOfBirth = DateOnly.Parse(values[3]),
-                    PhoneNumber = values[4],
-                    BirthPlace = values[5],
-                    IsGraduated = bool.Parse(values[6])
-                };
-
-                people.Add(person);
+                _personService.Create(person);
             }
+            return RedirectToAction("Index");
+        }
 
-            return people;
+        [HttpGet]
+        public IActionResult Update(int id)
+        {
+            Person person = _personService.GetById(id);
+            if (person == null)
+            {
+                return NotFound();
+            }
+            return View(person);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update([Bind("Id, FirstName, LastName, Gender, DateOfBirth, PhoneNumber, BirthPlace, IsGraduated")] Person person)
+        {
+            if (ModelState.IsValid)
+            {
+                _personService.Update(person.Id, person);
+            return RedirectToAction("Index");
+            }
+            return View(person);
+        }
+
+        [HttpGet]
+        public IActionResult Detail(int id)
+        {
+            Person person = _personService.GetById(id);
+            return View(person);
+        }
+
+        public IActionResult Delete(int id)
+        {
+            Person person = _personService.GetById(id);
+            return View("ConfirmDelete", person);
+        }
+
+        [HttpPost]
+        public IActionResult ConfirmDelete(int id)
+        {
+            _personService.Delete(id);
+            return RedirectToAction("Index");
         }
 
         public IActionResult GetMalePeople()
         {
-            List<People> people = ReadFile();
-            List<People> male = people.Where(people => people.Gender == Gender.male).ToList();
+            List<Person> people = ReadFile();
+            List<Person> male = people.Where(people => people.Gender == Gender.male).ToList();
             return View("Male", male);
         }
 
         public IActionResult GetOldestPerson()
         { 
-            List<People> people = ReadFile();
-            People oldestPerson = people.OrderBy(people => people.DateOfBirth).First();
+            List<Person> people = ReadFile();
+            Person oldestPerson = people.OrderBy(people => people.DateOfBirth).First();
 
             return View("Oldest", oldestPerson);
         }
 
         public IActionResult GetFullName()
         {
-            List<People> people = ReadFile();
+            List<Person> people = ReadFile();
             List<string> fullName = new List<string>();
             foreach (var person in people)
             {
@@ -91,8 +118,8 @@ namespace Day2.WebApp.Areas.NashTech.Controllers
                 fileContent = reader.ReadToEnd();
             }
 
-            List<People> people = ParsePeople(fileContent);
-            List<People> filteredPeople;
+            List<Person> people = ParsePeople(fileContent);
+            List<Person> filteredPeople;
 
             if (actionParam == "birthYear2000")
             {
@@ -125,7 +152,7 @@ namespace Day2.WebApp.Areas.NashTech.Controllers
                 fileContent = reader.ReadToEnd();
             }
 
-            List<People> people = ParsePeople(fileContent);
+            List<Person> people = ParsePeople(fileContent);
 
             var stream = new MemoryStream();
             ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
@@ -141,6 +168,45 @@ namespace Day2.WebApp.Areas.NashTech.Controllers
             return File(stream, "application/octet-stream", excelName);
 
         }
+        public List<Person> ReadFile()
+        {
+            string filePath = "D:\\Currently working on\\Work\\Assignment\\ASP.NET Core\\MVC\\Day2\\Day2.WebApp\\Data\\MOCK_DATA.csv";
+            string fileContent = "";
 
+            using (var reader = new StreamReader(filePath))
+            {
+                fileContent = reader.ReadToEnd();
+            }
+
+            List<Person> people = ParsePeople(fileContent);
+            return people;
+        }
+
+        public List<Person> ParsePeople(string fileContent)
+        {
+            List<Person> people = new List<Person>();
+
+            string[] lines = fileContent.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+
+            for (int i = 1; i < lines.Length; i++)
+            {
+                string[] values = lines[i].Split(',');
+
+                Person person = new Person
+                {
+                    FirstName = values[0],
+                    LastName = values[1],
+                    Gender = (Gender)Enum.Parse(typeof(Gender), values[2]),
+                    DateOfBirth = DateOnly.Parse(values[3]),
+                    PhoneNumber = values[4],
+                    BirthPlace = values[5],
+                    IsGraduated = bool.Parse(values[6])
+                };
+
+                people.Add(person);
+            }
+
+            return people;
+        }
     }
 }
