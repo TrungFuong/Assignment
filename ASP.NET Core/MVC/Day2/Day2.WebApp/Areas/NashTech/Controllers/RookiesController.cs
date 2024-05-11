@@ -84,14 +84,14 @@ namespace Day2.WebApp.Areas.NashTech.Controllers
 
         public IActionResult GetMalePeople()
         {
-            List<Person> people = ReadFile();
+            List<Person> people = _personService.GetAll();
             List<Person> male = people.Where(people => people.Gender == Gender.male).ToList();
             return View("Male", male);
         }
 
         public IActionResult GetOldestPerson()
         { 
-            List<Person> people = ReadFile();
+            List<Person> people = _personService.GetAll();
             Person oldestPerson = people.OrderBy(people => people.DateOfBirth).First();
 
             return View("Oldest", oldestPerson);
@@ -99,7 +99,7 @@ namespace Day2.WebApp.Areas.NashTech.Controllers
 
         public IActionResult GetFullName()
         {
-            List<Person> people = ReadFile();
+            List<Person> people = _personService.GetAll();
             List<string> fullName = new List<string>();
             foreach (var person in people)
             {
@@ -110,15 +110,7 @@ namespace Day2.WebApp.Areas.NashTech.Controllers
 
         public IActionResult Get2kList(string actionParam)
         {
-            string filePath = "D:\\Currently working on\\Work\\Assignment\\ASP.NET Core\\MVC\\Day2\\Day2.WebApp\\Data\\MOCK_DATA.csv";
-            string fileContent = "";
-
-            using (var reader = new StreamReader(filePath))
-            {
-                fileContent = reader.ReadToEnd();
-            }
-
-            List<Person> people = ParsePeople(fileContent);
+            List<Person> people = _personService.GetAll();
             List<Person> filteredPeople;
 
             if (actionParam == "birthYear2000")
@@ -144,15 +136,7 @@ namespace Day2.WebApp.Areas.NashTech.Controllers
 
         public IActionResult DownloadExcel()
         {
-            string filePath = "D:\\Currently working on\\Work\\Assignment\\ASP.NET Core\\MVC\\Day2\\Day2.WebApp\\Data\\MOCK_DATA.csv";
-            string fileContent = "";
-
-            using (var reader = new StreamReader(filePath))
-            {
-                fileContent = reader.ReadToEnd();
-            }
-
-            List<Person> people = ParsePeople(fileContent);
+            List<Person> people = _personService.GetAll();
 
             var stream = new MemoryStream();
             ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
@@ -168,45 +152,6 @@ namespace Day2.WebApp.Areas.NashTech.Controllers
             return File(stream, "application/octet-stream", excelName);
 
         }
-        public List<Person> ReadFile()
-        {
-            string filePath = "D:\\Currently working on\\Work\\Assignment\\ASP.NET Core\\MVC\\Day2\\Day2.WebApp\\Data\\MOCK_DATA.csv";
-            string fileContent = "";
-
-            using (var reader = new StreamReader(filePath))
-            {
-                fileContent = reader.ReadToEnd();
-            }
-
-            List<Person> people = ParsePeople(fileContent);
-            return people;
-        }
-
-        public List<Person> ParsePeople(string fileContent)
-        {
-            List<Person> people = new List<Person>();
-
-            string[] lines = fileContent.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-
-            for (int i = 1; i < lines.Length; i++)
-            {
-                string[] values = lines[i].Split(',');
-
-                Person person = new Person
-                {
-                    FirstName = values[0],
-                    LastName = values[1],
-                    Gender = (Gender)Enum.Parse(typeof(Gender), values[2]),
-                    DateOfBirth = DateOnly.Parse(values[3]),
-                    PhoneNumber = values[4],
-                    BirthPlace = values[5],
-                    IsGraduated = bool.Parse(values[6])
-                };
-
-                people.Add(person);
-            }
-
-            return people;
-        }
+       
     }
 }

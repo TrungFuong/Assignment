@@ -8,8 +8,8 @@ namespace Day2.WebApp.Repositories
 
         public void Create(Person person)
         {
-           var people = GetAllPersonFromFile();
-           people.Add(person);
+            var people = GetAllPersonFromFile();
+            people.Add(person);
         }
 
         public void Delete(int id)
@@ -22,7 +22,7 @@ namespace Day2.WebApp.Repositories
             return GetAllPersonFromFile();
         }
 
-        public Person GetById(int id)
+        public Person? GetById(int id)
         {
             var people = GetAllPersonFromFile();
             var currentPerson = _people.FirstOrDefault(p => p.Id == id);
@@ -30,19 +30,18 @@ namespace Day2.WebApp.Repositories
         }
 
         public void Update(int id, Person person)
-        { 
-            var people = GetAllPersonFromFile();
-            var currentPerson = _people.FirstOrDefault(p => p.Id == id);
+        {
+            var currentPerson = GetById(id);
             if (currentPerson != null)
             {
                 currentPerson.FirstName = person.FirstName;
                 currentPerson.LastName = person.LastName;
-                
-               currentPerson.Gender = person.Gender;
+                currentPerson.Gender = person.Gender;
+                currentPerson.DateOfBirth = person.DateOfBirth;
+                currentPerson.BirthPlace = person.BirthPlace;
             }
         }
-
-
+       
         private List<Person> GetAllPersonFromFile()
         {
             if (_people == null || !_people.Any())
@@ -76,10 +75,8 @@ namespace Day2.WebApp.Repositories
                     FirstName = values[0],
                     LastName = values[1],
                     Gender = (Gender)Enum.Parse(typeof(Gender), values[2]),
-                    DateOfBirth = DateOnly.Parse(values[3]),
-                    PhoneNumber = values[4],
-                    BirthPlace = values[5],
-                    IsGraduated = bool.Parse(values[6])
+                    DateOfBirth = DateTime.Parse(values[3]),
+                    BirthPlace = values[4],
                 };
 
                 people.Add(person);

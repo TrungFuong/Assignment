@@ -11,4 +11,10 @@
     <PackageReference Include="Faker.Net" Version="2.0.163" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Data\MOCK_DATA.csv">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
