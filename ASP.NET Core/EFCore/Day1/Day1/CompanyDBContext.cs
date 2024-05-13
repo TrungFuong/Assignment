@@ -25,6 +25,16 @@ namespace Day1
 
             modelBuilder.Entity<ProjectEmployee>().HasKey(pe => new { pe.ProjectId, pe.EmployeeId });
 
+            modelBuilder.Entity<ProjectEmployee>()
+                .HasOne(pe => pe.Project)
+                .WithMany(p => p.ProjectEmployees)
+                .HasForeignKey(pe => pe.ProjectId);
+
+            modelBuilder.Entity<ProjectEmployee>()
+                .HasOne(pe => pe.Employee)
+                .WithMany(e => e.ProjectEmployees)
+                .HasForeignKey(pe => pe.EmployeeId);
+
             modelBuilder.Entity<Departments>().HasData(
                 new Departments { Id = 1, Name = "Software Development" },
                 new Departments { Id = 2, Name = "Finance" },
@@ -36,7 +46,9 @@ namespace Day1
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=EFCoreDay1;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer("Data Source=TRUNGFUONG;Initial Catalog=Company;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
         }
+
+
     }
 }

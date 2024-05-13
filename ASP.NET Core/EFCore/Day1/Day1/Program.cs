@@ -14,11 +14,10 @@ namespace Day1
 
             builder.Services.AddControllers();
 
-            builder.Services.AddDbContext<CompanyDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Company")));
-            var dbContext = builder.Services.BuildServiceProvider().GetService<CompanyDBContext>();
-            dbContext.Database.EnsureCreated();
-            var connectionString = builder.Configuration.GetConnectionString("Company");
-            builder.Services.AddDbContext<CompanyDBContext>(options => options.UseSqlServer(connectionString));
+            //var dbContext = builder.Services.BuildServiceProvider().GetService<CompanyDBContext>();
+            //dbContext.Database.EnsureCreated();
+            //var connectionString = builder.Configuration.GetConnectionString("Company");
+            //builder.Services.AddDbContext<CompanyDBContext>(options => options.UseSqlServer(connectionString));
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

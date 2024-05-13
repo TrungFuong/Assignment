@@ -7,7 +7,7 @@ namespace Day1.Model
         [Required]
         public int Id { get; set; }
         public int EmployeeId { get; set; }
-        public decimal Salary { get; set; }
+        public int Salary { get; set; }
         public Employees Employee { get; set; }
     }
 }
