@@ -5,18 +5,18 @@ namespace Day1
 {
     public class CompanyDBContext : DbContext
     {
-        public DbSet<Employees> Employees { get; set; }
+        public DbSet<Employee> Employees { get; set; }
         public DbSet<Departments> Departments { get; set; }
-        public DbSet<Projects> Projects { get; set; }
-        public DbSet<Salaries> Salaries { get; set; }
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<Salarie> Salaries { get; set; }
         public DbSet<ProjectEmployee> ProjectEmployees { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Employees>()
+            modelBuilder.Entity<Employee>()
                 .HasOne(e => e.Salary)
                 .WithOne(s => s.Employee)
-                .HasForeignKey<Salaries>(s => s.EmployeeId);
+                .HasForeignKey<Salarie>(s => s.EmployeeId);
 
             modelBuilder.Entity<Departments>()
                 .HasMany(d => d.Employees)

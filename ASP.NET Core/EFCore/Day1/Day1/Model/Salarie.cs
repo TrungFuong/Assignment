@@ -2,12 +2,12 @@
 
 namespace Day1.Model
 {
-    public class Salaries
+    public class Salarie
     {
         [Required]
         public int Id { get; set; }
         public int EmployeeId { get; set; }
         public int Salary { get; set; }
-        public Employees Employee { get; set; }
+        public Employee Employee { get; set; }
     }
 }

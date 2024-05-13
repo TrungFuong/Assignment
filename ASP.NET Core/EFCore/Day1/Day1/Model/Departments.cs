@@ -10,7 +10,7 @@ namespace Day1.Model
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }
-        public IList<Employees> Employees { get; set; }
+        public IList<Employee> Employees { get; set; }
 
     }
 }

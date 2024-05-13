@@ -80,7 +80,7 @@ namespace Day1.Migrations
                     b.ToTable("ProjectEmployees");
                 });
 
-            modelBuilder.Entity("Day1.Model.Salaries", b =>
+            modelBuilder.Entity("Day1.Model.Salarie", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -102,7 +102,7 @@ namespace Day1.Migrations
                     b.ToTable("Salaries");
                 });
 
-            modelBuilder.Entity("Employees", b =>
+            modelBuilder.Entity("Employee", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -128,22 +128,7 @@ namespace Day1.Migrations
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("EmployeesProjects", b =>
-                {
-                    b.Property<int>("EmployeesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProjectsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("EmployeesId", "ProjectsId");
-
-                    b.HasIndex("ProjectsId");
-
-                    b.ToTable("EmployeesProjects");
-                });
-
-            modelBuilder.Entity("Projects", b =>
+            modelBuilder.Entity("Project", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -163,13 +148,13 @@ namespace Day1.Migrations
 
             modelBuilder.Entity("Day1.Model.ProjectEmployee", b =>
                 {
-                    b.HasOne("Employees", "Employee")
+                    b.HasOne("Employee", "Employee")
                         .WithMany("ProjectEmployees")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Projects", "Project")
+                    b.HasOne("Project", "Project")
                         .WithMany("ProjectEmployees")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -180,18 +165,18 @@ namespace Day1.Migrations
                     b.Navigation("Project");
                 });
 
-            modelBuilder.Entity("Day1.Model.Salaries", b =>
+            modelBuilder.Entity("Day1.Model.Salarie", b =>
                 {
-                    b.HasOne("Employees", "Employee")
+                    b.HasOne("Employee", "Employee")
                         .WithOne("Salary")
-                        .HasForeignKey("Day1.Model.Salaries", "EmployeeId")
+                        .HasForeignKey("Day1.Model.Salarie", "EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Employee");
                 });
 
-            modelBuilder.Entity("Employees", b =>
+            modelBuilder.Entity("Employee", b =>
                 {
                     b.HasOne("Day1.Model.Departments", "Department")
                         .WithMany("Employees")
@@ -202,27 +187,12 @@ namespace Day1.Migrations
                     b.Navigation("Department");
                 });
 
-            modelBuilder.Entity("EmployeesProjects", b =>
-                {
-                    b.HasOne("Employees", null)
-                        .WithMany()
-                        .HasForeignKey("EmployeesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Projects", null)
-                        .WithMany()
-                        .HasForeignKey("ProjectsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Day1.Model.Departments", b =>
                 {
                     b.Navigation("Employees");
                 });
 
-            modelBuilder.Entity("Employees", b =>
+            modelBuilder.Entity("Employee", b =>
                 {
                     b.Navigation("ProjectEmployees");
 
@@ -230,7 +200,7 @@ namespace Day1.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Projects", b =>
+            modelBuilder.Entity("Project", b =>
                 {
                     b.Navigation("ProjectEmployees");
                 });
