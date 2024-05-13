@@ -69,7 +69,6 @@ namespace Day2.WebApp.Areas.NashTech.Controllers
             {
                 return NotFound();
             }
-
             return Ok(person);
         }
 

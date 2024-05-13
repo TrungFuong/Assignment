@@ -80,7 +80,7 @@ namespace Day1.Migrations
                     b.ToTable("ProjectEmployees");
                 });
 
-            modelBuilder.Entity("Day1.Model.Salarie", b =>
+            modelBuilder.Entity("Day1.Model.Salaries", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -165,11 +165,11 @@ namespace Day1.Migrations
                     b.Navigation("Project");
                 });
 
-            modelBuilder.Entity("Day1.Model.Salarie", b =>
+            modelBuilder.Entity("Day1.Model.Salaries", b =>
                 {
                     b.HasOne("Employee", "Employee")
                         .WithOne("Salary")
-                        .HasForeignKey("Day1.Model.Salarie", "EmployeeId")
+                        .HasForeignKey("Day1.Model.Salaries", "EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

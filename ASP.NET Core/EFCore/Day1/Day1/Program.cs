@@ -13,11 +13,7 @@ namespace Day1
             // Add services to the container
 
             builder.Services.AddControllers();
-
-            //var dbContext = builder.Services.BuildServiceProvider().GetService<CompanyDBContext>();
-            //dbContext.Database.EnsureCreated();
-            //var connectionString = builder.Configuration.GetConnectionString("Company");
-            //builder.Services.AddDbContext<CompanyDBContext>(options => options.UseSqlServer(connectionString));
+            builder.Services.AddDbContext<CompanyDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Company")));
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

@@ -1,14 +1,16 @@
 ﻿using Day1.Model;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.CompilerServices;
 
 namespace Day1
 {
     public class CompanyDBContext : DbContext
     {
+        public CompanyDBContext(DbContextOptions<CompanyDBContext> dbContextOptions) : base(dbContextOptions) { }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Departments> Departments { get; set; }
         public DbSet<Project> Projects { get; set; }
-        public DbSet<Salarie> Salaries { get; set; }
+        public DbSet<Salaries> Salaries { get; set; }
         public DbSet<ProjectEmployee> ProjectEmployees { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -16,7 +18,7 @@ namespace Day1
             modelBuilder.Entity<Employee>()
                 .HasOne(e => e.Salary)
                 .WithOne(s => s.Employee)
-                .HasForeignKey<Salarie>(s => s.EmployeeId);
+                .HasForeignKey<Salaries>(s => s.EmployeeId);
 
             modelBuilder.Entity<Departments>()
                 .HasMany(d => d.Employees)

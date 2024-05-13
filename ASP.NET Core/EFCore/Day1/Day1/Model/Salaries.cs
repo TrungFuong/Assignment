@@ -2,7 +2,7 @@
 
 namespace Day1.Model
 {
-    public class Salarie
+    public class Salaries
     {
         [Required]
         public int Id { get; set; }

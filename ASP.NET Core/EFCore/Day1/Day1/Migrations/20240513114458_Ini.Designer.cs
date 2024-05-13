@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Day1.Migrations
 {
     [DbContext(typeof(CompanyDBContext))]
-    [Migration("20240513091809_Initial")]
-    partial class Initial
+    [Migration("20240513114458_Ini")]
+    partial class Ini
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -83,7 +83,7 @@ namespace Day1.Migrations
                     b.ToTable("ProjectEmployees");
                 });
 
-            modelBuilder.Entity("Day1.Model.Salarie", b =>
+            modelBuilder.Entity("Day1.Model.Salaries", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -168,11 +168,11 @@ namespace Day1.Migrations
                     b.Navigation("Project");
                 });
 
-            modelBuilder.Entity("Day1.Model.Salarie", b =>
+            modelBuilder.Entity("Day1.Model.Salaries", b =>
                 {
                     b.HasOne("Employee", "Employee")
                         .WithOne("Salary")
-                        .HasForeignKey("Day1.Model.Salarie", "EmployeeId")
+                        .HasForeignKey("Day1.Model.Salaries", "EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
