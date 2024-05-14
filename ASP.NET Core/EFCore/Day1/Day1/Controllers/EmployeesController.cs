@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Day1;
+using Day1.Model;
 
 namespace Day1.Controllers
 {
@@ -103,5 +104,23 @@ namespace Day1.Controllers
         {
             return _context.Employees.Any(e => e.Id == id);
         }
+
+        [HttpGet("employees-with-departments")]
+        public async Task<ActionResult<IEnumerable<Object>>> GetEmployeesWithDepartments()
+        {
+            var query = @"SELECT e.Id, e.Name, d.Name AS Department
+                          FROM Employees e
+                          INNER JOIN Departments d ON e.DepartmentId = d.Id";
+            return await _context.Database.SqlQueryRaw<EmployeeSQL>(query).ToListAsync();
+        }
+
+        [HttpGet("employees-with-salary-and-joined-date")]
+        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployeesWithSalaryAndJoinedDate()
+        {
+            var query = @"SELECT * FROM Employees WHERE Salary > 100 AND JoinedDate >= '2024-01-01'";
+            return await _context.Employees.FromSqlRaw(query).ToListAsync();
+        }
+        
+        
     }
 }

@@ -104,5 +104,16 @@ namespace Day1.Controllers
         {
             return _context.Salaries.Any(e => e.Id == id);
         }
+
+        [HttpGet("employees-with-salary-and-joined-date")]
+        public async Task<ActionResult<IEnumerable<EmployeeSalary>>> GetEmployeesWithSalaryAndJoinedDate()
+        {
+            var query = @"SELECT e.Id as EmployeeId, e.Name as EmployeeName, e.JoinedDate as JoinedDate, s.Salary as Salary 
+                          FROM Employees e
+                          INNER JOIN Salaries s ON e.Id = s.EmployeeId
+                          WHERE s.Salary > 100 AND e.JoinedDate >= '2024-01-01'";
+            return await _context.Database.SqlQueryRaw<EmployeeSalary>(query).ToListAsync();
+        }
+
     }
 }

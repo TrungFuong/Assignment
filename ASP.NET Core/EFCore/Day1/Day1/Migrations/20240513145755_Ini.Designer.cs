@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Day1.Migrations
 {
     [DbContext(typeof(CompanyDBContext))]
-    [Migration("20240513114458_Ini")]
+    [Migration("20240513145755_Ini")]
     partial class Ini
     {
         /// <inheritdoc />
