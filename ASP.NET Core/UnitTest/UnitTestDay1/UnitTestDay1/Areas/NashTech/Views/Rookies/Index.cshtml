@@ -1,0 +1,65 @@
+﻿@using UnitTestDay1.WebApp.Models
+@model List<Person>
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<h1>Index</h1>
+
+<div>
+    <table>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Gender</th>
+            <th>Date of Birth</th>
+            <th>Phone Number</th>
+            <th>Birth Place</th>
+            <th>Is Graduated</th>
+            <th></th>
+        </tr>
+        @foreach (var person in Model)
+        {
+            <tr onclick="location.href='@Url.Action("Detail", new { id = person.Id })'" style="cursor:pointer">
+                <td>@person.FirstName</td> 
+                <td>@person.LastName</td>
+                <td>@person.Gender</td>
+                <td>@person.DateOfBirth</td>
+                <td>@person.PhoneNumber</td>
+                <td>@person.BirthPlace</td>
+                <td>@person.IsGraduated</td>
+                <td><a asp-action="Update" asp-route-id="@person.Id" class="btn btn-sm btn-outline-danger">Update</a></td>
+            </tr>
+        }
+    </table>
+</div>
+
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid black;
+        padding: 8px;
+    }
+
+    th {
+        text-align: center;
+        background-color: #f2f2f2;
+    }
+
+    td{
+        text-align: left
+    }
+
+    tr:nth-child(even) {
+        background-color: lightblue;
+    }
+</style>

@@ -1,7 +1,7 @@
-using Day2.WebApp.Repositories;
-using Day2.WebApp.Services;
+using UnitTestDay1.WebApp.Repositories;
+using UnitTestDay1.WebApp.Services;
 
-namespace Day2.WebApp
+namespace UnitTestDay1.WebApp
 {
     public class Program
     {
@@ -14,9 +14,9 @@ namespace Day2.WebApp
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<IPersonService, PersonService>();
             builder.Services.AddSingleton<IPersonRepository, PersonRepository>();
-            
+
             var app = builder.Build();
-          
+
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {

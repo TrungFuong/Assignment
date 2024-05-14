@@ -1,0 +1,14 @@
+﻿@using UnitTestDay1.WebApp.Models
+@model Person
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Are you sure you want to delete? </h1>
+<div>@Model.FirstName @Model.LastName</div>
+<form asp-action="ConfirmDelete" method="post">
+    <input type="hidden" asp-for="@Model.Id" />
+    <input type="submit" value="ConfirmDelete" class="btn btn-danger" /> |
+    <a asp-action="Index">Back to List</a>
+</form>
