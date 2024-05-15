@@ -31,7 +31,6 @@ namespace UnitTestDay1.WebApp.Areas.NashTech.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("FirstName, LastName, Gender, DateOfBirth, PhoneNumber, BirthPlace, IsGraduated")] Person person)
         {
-            
             if (ModelState.IsValid)
             {
                 _personService.Create(person);
@@ -57,7 +56,7 @@ namespace UnitTestDay1.WebApp.Areas.NashTech.Controllers
             if (ModelState.IsValid)
             {
                 _personService.Update(person.Id, person);
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
             }
             return View(person);
         }
