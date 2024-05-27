@@ -1,4 +1,4 @@
-import GetAllPost from "../api/fetch-data";
+import GetAllPost from "../components/api/fetch-data";
 import DataTable from "react-data-table-component";
 
 const Post = () => {
