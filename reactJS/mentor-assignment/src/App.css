@@ -13,6 +13,15 @@ input {
   margin: 10px;
 }
 
+.button {
+  padding: 10px;
+  margin: 10px;
+  background-color: #61dafb;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
 .rdt_TableBody{
   height: 400px;
     overflow-y: auto;
