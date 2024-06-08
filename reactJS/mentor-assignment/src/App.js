@@ -5,9 +5,7 @@ import Post from './pages/Post';
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Navbar from "./components/navbar/navbar";
 import Home from "./pages/Home";
-import Create from "./pages/Create";
-import PostDetail from './pages/Detail.js';
-import UpdatePost from './pages/Update.js';
+import CreatePost from "./pages/CreatePost";
 
 function App() {
     return (
@@ -15,10 +13,8 @@ function App() {
             <Navbar/>
             <Routes>
                 <Route path='/home' element={<Home/>}/>
-                <Route path='/create' element={<Create/>}/>
                 <Route path='/posts' element={<Post/>}/>
-                <Route path='/posts/:id' element={<PostDetail/>}/> 
-                <Route path='/update/:id' element={<UpdatePost/>}/> 
+                <Route path='/create' element={<CreatePost/>}></Route>
             </Routes>
         </Router>
     );
